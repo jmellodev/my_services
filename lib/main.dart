@@ -14,7 +14,7 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  firebaseInitialization.then((value) {
+  await firebaseInitialization.then((value) {
     // we are going to inject the auth controller over here!
     Get.put(AuthController());
   });
