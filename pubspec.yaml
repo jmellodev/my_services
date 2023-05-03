@@ -1,0 +1,59 @@
+name: my_services
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.0.0-411.0.dev <4.0.0'
+
+dependencies:
+  cloud_firestore: ^4.5.3
+  firebase_auth: ^4.4.2
+  firebase_core: ^2.10.0
+  firebase_messaging: ^14.4.1
+  flutter:
+    sdk: flutter
+  flutter_native_splash: ^2.2.19
+  get: ^4.6.5
+  get_storage: ^2.1.1
+  google_sign_in: ^6.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+flutter_native_splash:
+  color: "#FFFFFF"
+  #background_image: "assets/background.png"
+  image: assets/images/julia_share.png
+
+  # branding: assets/images/julia_share.png
+  branding_mode: bottom
+
+  #color_dark: "#042a49"
+  #background_image_dark: "assets/dark-background.png"
+  #image_dark: assets/splash-invert.png
+  #branding_dark: assets/dart_dark.png
+
+  # Android 12 handles the splash screen differently than previous versions.  Please visit
+  # https://developer.android.com/guide/topics/ui/splash-screen
+  # Following are Android 12 specific parameter.
+  android_12:
+    #image: assets/android12splash.png
+    #color: "#42a5f5"
+    #icon_background_color: "#111111"
+
+    #branding: assets/dart.png
+
+    #image_dark: assets/android12splash-invert.png
+    #color_dark: "#042a49"
+    #icon_background_color_dark: "#eeeeee"
+
+  #android: false
+  ios: false
+  web: false
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
