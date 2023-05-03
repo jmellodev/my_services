@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "794280495372-e80s3k743r5jlk7utpuinh10qf7qku5j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.jmello.my_services",
+            "certificate_hash": "7109f87d2e275d18bd2d48bce485aff4fb5d4cf4"
+          }
+        },
+        {
           "client_id": "794280495372-vrmi98prfb1o6ot8fcjd0cnktrpcgdfl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

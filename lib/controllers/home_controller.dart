@@ -1,11 +1,13 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:my_services/models/user_model.dart';
+
 import 'package:my_services/constants/firebase_constants.dart';
+import 'package:my_services/models/user_model.dart';
 
 class HomeController extends GetxController {
   // RxList<UserModel> userList = RxList<UserModel>([]);
@@ -13,7 +15,7 @@ class HomeController extends GetxController {
   final userList = <UserModel>[].obs;
   final selectedUsers = <UserModel>[].obs;
   final box = GetStorage();
-  late final Map<String, dynamic> userJson;
+  Map<String, dynamic>? userJson;
 
   @override
   void onReady() {
@@ -25,6 +27,10 @@ class HomeController extends GetxController {
   void onClose() {
     super.onClose();
     _subscription?.cancel();
+  }
+
+  cloudMessagingListeners() {
+    firebaseMessaging.getInitialMessage();
   }
 
   Stream<List<UserModel>> getUsersStream() {
@@ -126,7 +132,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> addToCart() async {
-    final user = UserModel.fromJson(userJson);
+    final user = UserModel.fromJson(userJson!);
     Map<String, dynamic> $data = {
       'clientId': user.id,
       'price': 7.23,

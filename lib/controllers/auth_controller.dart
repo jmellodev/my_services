@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:my_services/constants/firebase_constants.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+import 'package:my_services/constants/firebase_constants.dart';
 import 'package:my_services/models/user_model.dart';
 import 'package:my_services/screens/auth/login.dart';
 import 'package:my_services/screens/home.dart';
@@ -16,13 +16,15 @@ class AuthController extends GetxController {
 
   late Rx<User?> firebaseUser;
   final box = GetStorage();
+  String? token;
 
   @override
-  void onReady() {
+  void onReady() async {
     super.onReady();
     firebaseUser = Rx<User?>(auth.currentUser);
     firebaseUser.bindStream(auth.userChanges());
     ever(firebaseUser, _setInitialScreen);
+    token = await firebaseMessaging.getToken();
     FlutterNativeSplash.remove();
   }
 
@@ -88,6 +90,7 @@ class AuthController extends GetxController {
       name: userCredential.user!.displayName ?? '',
       email: userCredential.user!.email ?? '',
       photoUrl: userCredential.user!.photoURL,
+      deviceId: token,
       type: type,
     );
     await box.write('user', user.toJson());
@@ -137,6 +140,7 @@ class AuthController extends GetxController {
         name: name,
         // photoUrl: userCredential.user!.photoURL,
         type: type,
+        deviceId: token,
       );
       await box.write('user', user.toJson());
       await usersCollection.doc(user.id).set(user.toJson()).then((value) async {

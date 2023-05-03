@@ -7,8 +7,6 @@ class ClientServicesController extends GetxController {
   final RxList<ServiceModel> services = <ServiceModel>[].obs;
 
   Stream<List<ServiceModel>> getServicesByClientId(String clientId) {
-    print(clientId);
-
     final services = servicesCollection
         .where('clientId', isEqualTo: clientId)
         .snapshots()
@@ -16,7 +14,6 @@ class ClientServicesController extends GetxController {
               final data = doc.data();
               return ServiceModel.fromJson(data as Map<String, dynamic>);
             }).toList());
-    print(services.toList());
     return services;
   }
 }
