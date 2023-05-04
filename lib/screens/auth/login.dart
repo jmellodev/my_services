@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+
 import 'package:my_services/controllers/auth_controller.dart';
 import 'package:my_services/screens/auth/register_view.dart';
 /* 
@@ -115,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
         _passwordController.text.trim(),
       );
       // e navegar para a próxima tela
-      print('Autenticação do usuário...');
+      debugPrint('Autenticação do usuário...');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -271,7 +273,7 @@ class _LoginPageState extends State<LoginPage> {
                 TextButton(
                   onPressed: () {
                     // Navegar para a tela de recuperação de senha
-                    print('Recuperação de senha...');
+                    debugPrint('Recuperação de senha...');
                   },
                   child: const Text('Esqueceu a senha?'),
                 ),

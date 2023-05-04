@@ -24,13 +24,9 @@ class AppThemes {
   static const Color _lightBackgroundSecondaryColor = white;
   static const Color _lightBackgroundAlertColor = blackPearl;
   static const Color _lightBackgroundActionTextColor = white;
-  static const Color _lightBackgroundErrorColor = brinkPink;
-  static const Color _lightBackgroundSuccessColor = juneBud;
 
   //Text Colors
   static const Color _lightTextColor = Colors.black;
-  static const Color _lightAlertTextColor = Colors.black;
-  static const Color _lightTextSecondaryColor = Colors.black;
 
   //Border Color
   static const Color _lightBorderColor = nevada;
@@ -39,7 +35,6 @@ class AppThemes {
   static const Color _lightIconColor = nevada;
 
   //form input colors
-  static const Color _lightInputFillColor = _lightBackgroundSecondaryColor;
   static const Color _lightBorderActiveColor = _lightPrimaryColor;
   static const Color _lightBorderErrorColor = brinkPink;
 
@@ -54,15 +49,8 @@ class AppThemes {
   static const Color _darkBackgroundAlertColor = blackPearl;
   static const Color _darkBackgroundActionTextColor = white;
 
-  static const Color _darkBackgroundErrorColor =
-      Color.fromRGBO(255, 97, 136, 1);
-  static const Color _darkBackgroundSuccessColor =
-      Color.fromRGBO(186, 215, 97, 1);
-
   //Text Colors
   static const Color _darkTextColor = Colors.white;
-  static const Color _darkAlertTextColor = Colors.black;
-  static const Color _darkTextSecondaryColor = Colors.black;
 
   //Border Color
   static const Color _darkBorderColor = nevada;

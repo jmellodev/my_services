@@ -52,7 +52,7 @@ class HomeController extends GetxController {
 
       userList.assignAll(users);
     } catch (e) {
-      print(e);
+      debugPrint('$e');
     }
   }
 

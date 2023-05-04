@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:my_services/controllers/auth_controller.dart';
 
 class RegisterView extends StatefulWidget {
@@ -27,7 +28,7 @@ class _RegisterViewState extends State<RegisterView> {
     if (_formKey.currentState!.validate()) {
       // Enviar dados de registro para o servidor
       AuthController.authInstance.register(name, email, password, type);
-      print('Dados de registro enviados');
+      debugPrint('Dados de registro enviados');
     }
   }
 

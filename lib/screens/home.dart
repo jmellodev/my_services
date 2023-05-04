@@ -6,7 +6,6 @@ import 'package:my_services/controllers/auth_controller.dart';
 // import 'package:my_services/controllers/auth_controller.dart';
 import 'package:my_services/controllers/home_controller.dart';
 import 'package:my_services/models/user_model.dart';
-import 'package:my_services/screens/profile/profile_screen.dart';
 import 'package:my_services/ui/settings_ui.dart';
 import 'package:my_services/widgets/user_list_item.dart';
 

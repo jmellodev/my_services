@@ -105,9 +105,9 @@ class AuthController extends GetxController {
     } on FirebaseAuthException catch (e) {
       // this is solely for the Firebase Auth Exception
       // for example : password did not match
-      print(e.message);
+      debugPrint(e.message);
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
   }
 
@@ -123,9 +123,9 @@ class AuthController extends GetxController {
       await usersCollection.doc(user.id).set(user.toJson());
       await box.write('user', user.toJson()); */
     } on FirebaseAuthException catch (e) {
-      print(e.message);
+      debugPrint(e.message);
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
   }
 
@@ -148,14 +148,14 @@ class AuthController extends GetxController {
         debugPrint(box.read('user').toString());
       });
     } on FirebaseAuthException catch (e) {
-      print(e.message);
+      debugPrint(e.message);
       Get.snackbar(
         "Error",
         e.message!,
         snackPosition: SnackPosition.BOTTOM,
       );
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
   }
 
@@ -168,7 +168,7 @@ class AuthController extends GetxController {
       // Clear user data from GetStorage
       await box.remove('user');
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
   }
 }
