@@ -9,7 +9,7 @@ class AppRoutes {
   AppRoutes._(); //this is to prevent anyone from instantiating this object
   static final routes = [
     GetPage(name: '/', page: () => HomeView()),
-    GetPage(name: '/login', page: () => const LoginPage()),
+    GetPage(name: '/login', page: () => LoginPage()),
     GetPage(name: '/register', page: () => const RegisterView()),
     GetPage(name: '/settings', page: () => const SettingsUI()),
     // GetPage(name: '/reset-password', page: () => ResetPasswordUI()),

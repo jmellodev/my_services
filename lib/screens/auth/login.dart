@@ -2,285 +2,222 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:my_services/controllers/auth_controller.dart';
-import 'package:my_services/models/menu_option_model.dart';
-import 'package:my_services/screens/auth/register_view.dart';
-import 'package:my_services/ui/components/segmented_selector.dart';
-/* 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+import 'package:my_services/controllers/login_controller.dart';
+import 'package:my_services/ui/components/or_divider.dart';
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  // Crie controladores para os campos de entrada de texto
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Adicione um campo de texto para o e-mail
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'E-mail',
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              // Adicione um campo de texto para a senha
-              TextFormField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Senha',
-                ),
-              ),
-              const SizedBox(height: 32.0),
-              // Adicione um botão de login destacado
-              ElevatedButton(
-                onPressed: () {
-                  // this is for the login function in auth controller
-                  AuthController.authInstance.login(
-                    _emailController.text.trim(),
-                    _passwordController.text.trim(),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 32.0, vertical: 16.0),
-                ),
-                child: const Text('Login'),
-              ),
-              const SizedBox(height: 16.0),
-              // Adicione um botão para fazer login usando a conta do Google
-              OutlinedButton.icon(
-                onPressed: () {
-                  // Adicione a lógica para fazer login usando a conta do Google
-                  AuthController.authInstance.signInWithGoogle();
-                },
-                icon: const Icon(Icons.login),
-                label: const Text('Entrar com o Google'),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  side: const BorderSide(color: Colors.black),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 32.0, vertical: 16.0),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
- */
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
+class LoginPage extends StatelessWidget {
+  final controller = Get.put(LoginController());
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  bool _obscureText = true;
-  String _accountType = 'cliente';
 
-  void _togglePasswordVisibility() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
-
-  void _handleLogin() {
-    final isValid = _formKey.currentState?.validate() ?? false;
-
-    if (isValid) {
-      // Realizar a autenticação do usuário aqui
-      AuthController.authInstance.login(
-        _emailController.text.trim(),
-        _passwordController.text.trim(),
-      );
-      // e navegar para a próxima tela
-      debugPrint('Autenticação do usuário...');
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Por favor, corrija os erros no formulário'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
-  }
+  LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: 60),
-                /* Image.asset(
-                  'assets/images/julia_share.png',
-                  height: 120,
-                ), */
-                const SizedBox(height: 20),
-                const Text(
-                  'Bem-vindo(a)',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 40),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    hintText: 'Digite seu e-mail',
-                    prefixIcon: const Icon(Icons.email),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value?.isEmpty ?? true) {
-                      return 'Por favor, digite seu e-mail';
-                    }
-                    if (!value!.contains('@')) {
-                      return 'Por favor, digite um e-mail válido';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    hintText: 'Digite sua senha',
-                    prefixIcon: const Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      onPressed: _togglePasswordVisibility,
-                      icon: Icon(
-                        _obscureText ? Icons.visibility : Icons.visibility_off,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Form(
+              key: _formKey,
+              child: Center(
+                child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 240.0,
+                      child: Image.asset(
+                        'assets/images/services.png',
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(28, 20, 12, 12),
+                          hintText: 'E-mail',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.white30),
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.blue),
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.red),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          suffix: const Icon(Icons.email_outlined)),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor, insira seu email';
+                        }
+                        if (!GetUtils.isEmail(value)) {
+                          return 'Email inválido';
+                        }
+                        return null;
+                      },
+                      onChanged: controller.setEmail,
                     ),
-                  ),
-                  obscureText: _obscureText,
-                  validator: (value) {
-                    if (value?.isEmpty ?? true) {
-                      return 'Por favor, digite sua senha';
-                    }
-                    if (value!.length < 6) {
-                      return 'A senha deve ter pelo menos 6 caracteres';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  'Você é:',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                SegmentedSelector(
-                    menuOptions: [
-                      MenuOptionsModel(
-                        key: "cliente",
-                        value: "Cliente",
-                        icon: Icons.person,
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      keyboardType: TextInputType.visiblePassword,
+                      decoration: InputDecoration(
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(28, 20, 12, 12),
+                        hintText: 'Senha',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white30),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.blue),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.red),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.red),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            controller.isPasswordObscure
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Colors.grey,
+                          ),
+                          onPressed: controller.togglePasswordObscure,
+                        ),
                       ),
-                      MenuOptionsModel(
-                        key: 'prestador',
-                        value: 'Prestador',
-                        icon: Icons.build_sharp,
-                      )
-                    ],
-                    selectedOption: _accountType,
-                    onValueChanged: (value) {
-                      setState(() {
-                        print(_accountType);
-                        _accountType = value;
-                      });
-                    }),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _handleLogin,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      obscureText: controller.isPasswordObscure,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor, insira sua senha';
+                        }
+                        return null;
+                      },
+                      onChanged: controller.setPassword,
                     ),
-                  ),
-                  child: const Text('Entrar'),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () => Get.to(() => const RegisterView()),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    const SizedBox(height: 20),
+                    const Text('Tipo de conta'),
+                    Obx(
+                      () {
+                        return DropdownButton(
+                          value: controller.accountType,
+                          onChanged: (value) =>
+                              controller.setAccountType(value!),
+                          items: const [
+                            DropdownMenuItem(
+                              value: 'tipo',
+                              child: Text('Escolha'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'cliente',
+                              child: Text('Cliente'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'prestador',
+                              child: Text('Prestador'),
+                            ),
+                          ],
+                        );
+                      },
                     ),
-                  ),
-                  child: const Text('Registre-se'),
+                    const SizedBox(height: 20),
+                    Obx(
+                      () => ElevatedButton.icon(
+                        icon: controller.isLoading
+                            ? const SizedBox.shrink()
+                            : const Icon(Icons.email),
+                        onPressed: controller.isLoading
+                            ? null
+                            : () {
+                                if (_formKey.currentState!.validate()) {
+                                  controller.loginWithEmail();
+                                }
+                              },
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                        ),
+                        label: controller.isLoading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(),
+                              )
+                            : const Text('Entrar com Email'),
+                      ),
+                    ),
+                    const OrDivider(),
+                    const SizedBox(height: 20),
+                    ElevatedButton.icon(
+                      onPressed: controller.isLoading
+                          ? null
+                          : () {
+                              controller.loginWithGoogle();
+                            },
+                      icon: const Image(
+                        image: AssetImage("assets/images/google_logo.png"),
+                        height: 30.0,
+                      ),
+                      label: Text(
+                        'Login com Google',
+                        style: TextStyle(
+                          color: Colors.grey.shade800,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton.icon(
+                      onPressed: controller.isLoading
+                          ? null
+                          : () {
+                              controller.loginWithFacebook();
+                            },
+                      icon: const Icon(
+                        Icons.facebook,
+                        size: 30,
+                      ),
+                      label: const Text(
+                        'Login com Facebook',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue[800],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 20),
-                TextButton(
-                  onPressed: () {
-                    // Navegar para a tela de recuperação de senha
-                    debugPrint('Recuperação de senha...');
-                  },
-                  child: const Text('Esqueceu a senha?'),
-                ),
-                OutlinedButton.icon(
-                  onPressed: () {
-                    if (_accountType == null) {
-                      Get.snackbar('Tipo', 'Escolha o tipo de usuário.');
-                    } else {
-                      AuthController.authInstance
-                          .signInWithGoogle(_accountType);
-                    }
-                  },
-                  icon: const Icon(Icons.login),
-                  label: const Text('Entrar com o Google'),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    side: const BorderSide(color: Colors.black),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 32.0, vertical: 16.0),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),

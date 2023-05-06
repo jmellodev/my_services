@@ -35,7 +35,7 @@ class AuthController extends GetxController {
       Get.offAll(() => HomeView());
     } else {
       // user is null as in user is not available or not logged in
-      Get.offAll(() => const LoginPage());
+      Get.offAll(() => LoginPage());
     }
   }
 

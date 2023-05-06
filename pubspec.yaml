@@ -25,8 +25,8 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 flutter_native_splash:
   color: "#FFFFFF"
-  #background_image: "assets/background.png"
-  image: assets/images/julia_share.png
+  background_image: "assets/images/services.png"
+  # image: assets/images/services.png
 
   # branding: assets/images/julia_share.png
   branding_mode: bottom
