@@ -10,6 +10,7 @@ import 'package:my_services/constants/firebase_constants.dart';
 import 'package:my_services/models/user_model.dart';
 import 'package:my_services/screens/auth/login.dart';
 import 'package:my_services/screens/home.dart';
+import 'package:my_services/utils/helper_notification.dart';
 
 class AuthController extends GetxController {
   static AuthController authInstance = Get.find();
@@ -95,6 +96,8 @@ class AuthController extends GetxController {
     );
     await box.write('user', user.toJson());
     await usersCollection.doc(user.id).set(user.toJson());
+    HelperNotification().senPushNotification(
+        token, userCredential.user!.displayName, 'Fez login com sucesso!');
     return user;
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 
 class HelperNotification {
@@ -22,7 +23,7 @@ class HelperNotification {
     }
   }
 
-  sendPushNotification(String? token, String? title, String body) async {
+  void senPushNotification(String? token, String? title, String body) async {
     try {
       await http.post(
         'https://fcm.googleapis.com/fcm/send',
@@ -37,7 +38,7 @@ class HelperNotification {
           'notification': {
             'title': title,
             'body': body,
-            'android_channel_id': "myservices",
+            'android_channel_id': "my_services",
           },
           'to': token
         },
@@ -51,6 +52,66 @@ class HelperNotification {
       if (kDebugMode) debugPrint('Error push notification $e');
     }
   }
+
+  static Future<void> initialize(
+      FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
+    var androidInitialize =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationsSettings =
+        InitializationSettings(android: androidInitialize);
+    flutterLocalNotificationsPlugin.initialize(initializationsSettings,
+        onDidReceiveNotificationResponse: (NotificationResponse payload) async {
+      try {
+        if (payload.payload!.isNotEmpty) {
+          debugPrint(payload.payload.toString());
+        }
+      } catch (e) {
+        return;
+      }
+    });
+
+    FirebaseMessaging.onMessage.listen((message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      debugPrint(
+          "onMessage: ${message.notification!.title}/${message.notification?.body}/${message.notification?.titleLocKey}");
+      debugPrint("onMessage message type:${message.data['type']}");
+      debugPrint("onMessage message :${message.data}");
+
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                'my_services',
+                'canal_de_notification',
+                channelDescription: 'Canal de notificação',
+                icon: android.smallIcon,
+                importance: Importance.max,
+                priority: Priority.high,
+                sound:
+                    const RawResourceAndroidNotificationSound('notification'),
+              ),
+            ));
+      }
+    });
+  }
+}
+
+Future<dynamic> myBackgroundMessageHandler(message) async {
+  debugPrint(
+      "onBackground: ${message.notification!.title}/${message.notification!.body}/${message.notification!.titleLocKey}");
+  var androidInitialize =
+      const AndroidInitializationSettings('@mipmap/ic_launcher');
+  // var iOSInitialize = new IOSInitializationSettings();
+  var initializationsSettings =
+      InitializationSettings(android: androidInitialize);
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  flutterLocalNotificationsPlugin.initialize(initializationsSettings);
+  // NotificationHelper.showNotification(message, flutterLocalNotificationsPlugin, true);
 }
 
 showLoading() {

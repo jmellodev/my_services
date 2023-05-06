@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:my_services/controllers/auth_controller.dart';
+import 'package:my_services/models/menu_option_model.dart';
 import 'package:my_services/screens/auth/register_view.dart';
+import 'package:my_services/ui/components/segmented_selector.dart';
 /* 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -99,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscureText = true;
-  String? _accountType;
+  String _accountType = 'cliente';
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -139,18 +141,18 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // const SizedBox(height: 60),
+                const SizedBox(height: 60),
                 /* Image.asset(
                   'assets/images/julia_share.png',
                   height: 120,
                 ), */
                 const SizedBox(height: 20),
                 const Text(
-                  'Bem-vindo ao meu aplicativo',
+                  'Bem-vindo(a)',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -210,43 +212,26 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          _accountType = 'cliente';
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: _accountType == 'cliente'
-                            ? Colors.blue
-                            : Colors.grey,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
+                SegmentedSelector(
+                    menuOptions: [
+                      MenuOptionsModel(
+                        key: "cliente",
+                        value: "Cliente",
+                        icon: Icons.person,
                       ),
-                      child: const Text('Cliente'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          _accountType = 'prestador';
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: _accountType == 'prestador'
-                            ? Colors.blue
-                            : Colors.grey,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      child: const Text('Prestador'),
-                    ),
-                  ],
-                ),
+                      MenuOptionsModel(
+                        key: 'prestador',
+                        value: 'Prestador',
+                        icon: Icons.build_sharp,
+                      )
+                    ],
+                    selectedOption: _accountType,
+                    onValueChanged: (value) {
+                      setState(() {
+                        print(_accountType);
+                        _accountType = value;
+                      });
+                    }),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: _handleLogin,

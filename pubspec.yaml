@@ -13,6 +13,7 @@ dependencies:
   firebase_messaging: ^14.4.1
   flutter:
     sdk: flutter
+  flutter_local_notifications: ^14.0.0+1
   flutter_native_splash: ^2.2.19
   get: ^4.6.5
   get_storage: ^2.1.1
