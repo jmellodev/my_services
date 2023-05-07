@@ -3,27 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:my_services/constants/app_themes.dart';
 
 class OrDivider extends StatelessWidget {
-  const OrDivider({super.key});
+  const OrDivider({
+    super.key,
+    this.text = 'Ou',
+  });
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
-          Expanded(
+          const Expanded(
               child: Divider(
             color: AppThemes.nevada,
             thickness: 0.4,
           )),
-          SizedBox(
+          const SizedBox(
             width: 8,
           ),
-          Text('Ou'),
-          SizedBox(
+          Text(text!),
+          const SizedBox(
             width: 8,
           ),
-          Expanded(
+          const Expanded(
               child: Divider(
             color: AppThemes.nevada,
             thickness: 0.4,

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:get/get.dart';
+
 import 'package:my_services/controllers/auth_controller.dart';
+import 'package:my_services/controllers/login_controller.dart';
+import 'package:my_services/ui/components/or_divider.dart';
+import 'package:my_services/ui/components/social_button.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -16,6 +21,7 @@ class _RegisterViewState extends State<RegisterView> {
   final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _emailController = TextEditingController();
+  final controller = Get.put(LoginController());
 
   void _handlePasswordObscure() {
     setState(() {
@@ -147,21 +153,28 @@ class _RegisterViewState extends State<RegisterView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text('Sou um:'),
-                    const SizedBox(width: 10),
-                    DropdownButton<String>(
-                      value: _accountType,
-                      onChanged: (value) {
-                        setState(() {
-                          _accountType = value!;
-                        });
-                      },
-                      items: <String>['cliente', 'prestador']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value.toUpperCase()),
+                    Obx(
+                      () {
+                        return DropdownButton(
+                          value: controller.accountType,
+                          onChanged: (value) =>
+                              controller.setAccountType(value!),
+                          items: const [
+                            DropdownMenuItem(
+                              value: 'tipo',
+                              child: Text('Escolha'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'cliente',
+                              child: Text('Cliente'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'prestador',
+                              child: Text('Prestador'),
+                            ),
+                          ],
                         );
-                      }).toList(),
+                      },
                     ),
                   ],
                 ),
@@ -186,6 +199,21 @@ class _RegisterViewState extends State<RegisterView> {
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
+                ),
+                const OrDivider(text: 'Ou registre-se com:'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SocialButton(
+                      buttonType: SocialLoginButtonType.google,
+                      controller: controller,
+                    ),
+                    const SizedBox(width: 20),
+                    SocialButton(
+                      buttonType: SocialLoginButtonType.facebook,
+                      controller: controller,
+                    ),
+                  ],
                 ),
               ],
             ),

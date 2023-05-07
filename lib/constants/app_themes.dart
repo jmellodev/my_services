@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class AppThemes {
   AppThemes._();
 
-  static const Color dodgerBlue = Color.fromRGBO(113, 194, 8, 1);
-  static const Color whiteLilac = Color.fromRGBO(248, 250, 252, 1);
+  static const Color dodgerGreen = Color.fromRGBO(113, 194, 8, 1);
+  static const Color whiteLilac = Color.fromRGBO(236, 238, 240, 1);
   static const Color blackPearl = Color.fromRGBO(30, 31, 43, 1);
   static const Color brinkPink = Color.fromRGBO(255, 107, 144, 1);
-  static const Color errorColor = Colors.red;
+  static const Color errorColor = Color.fromRGBO(244, 67, 54, 1);
   static const Color juneBud = Color.fromRGBO(186, 215, 97, 1);
-  static const Color white = Color.fromRGBO(255, 255, 255, 1);
+  static const Color white = Color.fromRGBO(241, 241, 241, 1);
   static const Color nevada = Color.fromRGBO(105, 109, 119, 1);
   static const Color ebonyClay = Color.fromRGBO(40, 42, 58, 1);
 
@@ -17,7 +17,7 @@ class AppThemes {
   static String font2 = "Roboto"; */
   //constants color range for light theme
   //main color
-  static const Color _lightPrimaryColor = dodgerBlue;
+  static const Color _lightPrimaryColor = dodgerGreen;
 
   //Background Colors
   static const Color _lightBackgroundColor = whiteLilac;
@@ -40,7 +40,7 @@ class AppThemes {
   static const Color _lightBorderErrorColor = brinkPink;
 
   //constants color range for dark theme
-  static const Color _darkPrimaryColor = dodgerBlue;
+  static const Color _darkPrimaryColor = dodgerGreen;
 
   //Background Colors
   static const Color _darkBackgroundColor = ebonyClay;
@@ -104,33 +104,35 @@ class AppThemes {
     textTheme: _lightTextTheme,
     buttonTheme: ButtonThemeData(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(50),
         ),
         buttonColor: _lightPrimaryColor,
         textTheme: ButtonTextTheme.primary),
     unselectedWidgetColor: _lightPrimaryColor,
     inputDecorationTheme: const InputDecorationTheme(
+      contentPadding: EdgeInsets.fromLTRB(28, 20, 12, 12),
       //prefixStyle: TextStyle(color: _lightIconColor),
+      filled: true,
       border: OutlineInputBorder(
           borderSide: BorderSide(width: 1.0),
           borderRadius: BorderRadius.all(
-            Radius.circular(8.0),
+            Radius.circular(50.0),
           )),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: _lightBorderColor, width: 1.0),
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: BorderRadius.all(Radius.circular(50.0)),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: _lightBorderActiveColor),
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: BorderRadius.all(Radius.circular(50.0)),
       ),
       errorBorder: OutlineInputBorder(
         borderSide: BorderSide(color: _lightBorderErrorColor),
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: BorderRadius.all(Radius.circular(50.0)),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderSide: BorderSide(color: _lightBorderErrorColor),
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: BorderRadius.all(Radius.circular(50.0)),
       ),
       fillColor: _lightBackgroundSecondaryColor,
       //focusColor: _lightBorderActiveColor,
@@ -188,7 +190,7 @@ class AppThemes {
     textTheme: _darkTextTheme,
     buttonTheme: ButtonThemeData(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(50),
         ),
         buttonColor: _darkPrimaryColor,
         textTheme: ButtonTextTheme.primary),
@@ -199,23 +201,23 @@ class AppThemes {
       border: OutlineInputBorder(
           borderSide: BorderSide(width: 1.0),
           borderRadius: BorderRadius.all(
-            Radius.circular(8.0),
+            Radius.circular(50.0),
           )),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: _darkBorderColor, width: 1.0),
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: BorderRadius.all(Radius.circular(50.0)),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: _darkBorderActiveColor),
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: BorderRadius.all(Radius.circular(50.0)),
       ),
       errorBorder: OutlineInputBorder(
         borderSide: BorderSide(color: _darkBorderErrorColor),
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: BorderRadius.all(Radius.circular(50.0)),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderSide: BorderSide(color: _darkBorderErrorColor),
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: BorderRadius.all(Radius.circular(50.0)),
       ),
       fillColor: _darkInputFillColor,
       //focusColor: _darkBorderActiveColor,

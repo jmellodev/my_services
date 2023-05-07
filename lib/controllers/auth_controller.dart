@@ -8,8 +8,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:my_services/constants/firebase_constants.dart';
 import 'package:my_services/models/user_model.dart';
-import 'package:my_services/screens/auth/login.dart';
-import 'package:my_services/screens/home.dart';
 import 'package:my_services/utils/helper_notification.dart';
 
 class AuthController extends GetxController {
@@ -24,49 +22,21 @@ class AuthController extends GetxController {
     super.onReady();
     firebaseUser = Rx<User?>(auth.currentUser);
     firebaseUser.bindStream(auth.userChanges());
-    ever(firebaseUser, _setInitialScreen);
+    ever(firebaseUser, setInitialScreen);
     token = await firebaseMessaging.getToken();
     FlutterNativeSplash.remove();
   }
 
-  _setInitialScreen(User? user) {
+  setInitialScreen(User? user) {
     if (user != null) {
       // user is logged in
-      Get.offAll(() => HomeView());
+      // Get.offAll(() => HomeView());
+      Get.offAllNamed('/');
     } else {
       // user is null as in user is not available or not logged in
-      Get.offAll(() => LoginPage());
+      // Get.offAll(() => LoginPage());
+      Get.offAllNamed('/login');
     }
-  }
-
-  Future<UserCredential> signInWithGoogleA() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-    // Once signed in, return the UserCredential
-    // return await FirebaseAuth.instance.signInWithCredential(credential);
-    final userCredential =
-        await FirebaseAuth.instance.signInWithCredential(credential);
-
-    //Get user data
-    final user = userCredential.user;
-    final displayName = user?.displayName;
-    final email = user?.email;
-    final photoUrl = user?.photoURL;
-
-    // Save user data
-    box.write('displayName', displayName ?? '');
-    box.write('email', email ?? '');
-    box.write('photoUrl', photoUrl ?? '');
-
-    return userCredential;
   }
 
   Future<UserModel?> signInWithGoogle(String? type) async {
@@ -99,19 +69,6 @@ class AuthController extends GetxController {
     HelperNotification().senPushNotification(
         token, userCredential.user!.displayName, 'Fez login com sucesso!');
     return user;
-  }
-
-  void loginA(String email, String password) async {
-    try {
-      await auth.signInWithEmailAndPassword(email: email, password: password);
-      await box.write('email', email);
-    } on FirebaseAuthException catch (e) {
-      // this is solely for the Firebase Auth Exception
-      // for example : password did not match
-      debugPrint(e.message);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
   }
 
   void login(String email, String password) async {
@@ -173,5 +130,48 @@ class AuthController extends GetxController {
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  void loginA(String email, String password) async {
+    try {
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+      await box.write('email', email);
+    } on FirebaseAuthException catch (e) {
+      // this is solely for the Firebase Auth Exception
+      // for example : password did not match
+      debugPrint(e.message);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<UserCredential> signInWithGoogleA() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    // Once signed in, return the UserCredential
+    // return await FirebaseAuth.instance.signInWithCredential(credential);
+    final userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    //Get user data
+    final user = userCredential.user;
+    final displayName = user?.displayName;
+    final email = user?.email;
+    final photoUrl = user?.photoURL;
+
+    // Save user data
+    box.write('displayName', displayName ?? '');
+    box.write('email', email ?? '');
+    box.write('photoUrl', photoUrl ?? '');
+
+    return userCredential;
   }
 }

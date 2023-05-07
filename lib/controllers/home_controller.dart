@@ -40,6 +40,7 @@ class HomeController extends GetxController {
   Stream<List<UserModel>> getUsersStream() {
     return usersCollection
         .where('isActive', isEqualTo: true)
+        .where('type', isEqualTo: 'prestador')
         .snapshots()
         .map((QuerySnapshot query) => query.docs.map((doc) {
               final data = doc.data();
@@ -49,7 +50,11 @@ class HomeController extends GetxController {
 
   void loadUsers() async {
     try {
-      final snapshot = await usersCollection.orderBy('name').get();
+      final snapshot = await usersCollection
+          .orderBy('name')
+          .where('isActive', isEqualTo: true)
+          .where('type', isEqualTo: 'prestador')
+          .get();
 
       final users =
           snapshot.docs.map((doc) => UserModel.fromJson(doc.data())).toList();
@@ -218,9 +223,7 @@ class HomeController extends GetxController {
       );
     });*/
 
-    FirebaseMessaging.onBackgroundMessage((message) async {
-
-    });
+    FirebaseMessaging.onBackgroundMessage((message) async {});
   }
 }
 

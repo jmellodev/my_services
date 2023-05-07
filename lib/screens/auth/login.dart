@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:my_services/controllers/login_controller.dart';
 import 'package:my_services/ui/components/or_divider.dart';
+import 'package:my_services/ui/components/social_button.dart';
 
 class LoginPage extends StatelessWidget {
   final controller = Get.put(LoginController());
@@ -34,30 +35,11 @@ class LoginPage extends StatelessWidget {
                     ),
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                          contentPadding:
-                              const EdgeInsets.fromLTRB(28, 20, 12, 12),
-                          hintText: 'E-mail',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white30),
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.blue),
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.red),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.red),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          suffix: const Icon(Icons.email_outlined)),
+                      decoration: const InputDecoration(
+                        filled: true,
+                        label: Text('E-mail'),
+                        contentPadding: EdgeInsets.fromLTRB(20, 10, 12, 12),
+                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Por favor, insira seu email';
@@ -70,72 +52,30 @@ class LoginPage extends StatelessWidget {
                       onChanged: controller.setEmail,
                     ),
                     const SizedBox(height: 20),
-                    TextFormField(
-                      keyboardType: TextInputType.visiblePassword,
-                      decoration: InputDecoration(
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(28, 20, 12, 12),
-                        hintText: 'Senha',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white30),
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.blue),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.red),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.red),
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            controller.isPasswordObscure
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: Colors.grey,
-                          ),
-                          onPressed: controller.togglePasswordObscure,
-                        ),
-                      ),
-                      obscureText: controller.isPasswordObscure,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Por favor, insira sua senha';
-                        }
-                        return null;
-                      },
-                      onChanged: controller.setPassword,
-                    ),
-                    const SizedBox(height: 20),
-                    const Text('Tipo de conta'),
                     Obx(
                       () {
-                        return DropdownButton(
-                          value: controller.accountType,
-                          onChanged: (value) =>
-                              controller.setAccountType(value!),
-                          items: const [
-                            DropdownMenuItem(
-                              value: 'tipo',
-                              child: Text('Escolha'),
+                        return TextFormField(
+                          keyboardType: TextInputType.visiblePassword,
+                          decoration: InputDecoration(
+                            label: const Text('Senha'),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                controller.isPasswordObscure
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.grey,
+                              ),
+                              onPressed: controller.togglePasswordObscure,
                             ),
-                            DropdownMenuItem(
-                              value: 'cliente',
-                              child: Text('Cliente'),
-                            ),
-                            DropdownMenuItem(
-                              value: 'prestador',
-                              child: Text('Prestador'),
-                            ),
-                          ],
+                          ),
+                          obscureText: controller.isPasswordObscure,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor, insira sua senha';
+                            }
+                            return null;
+                          },
+                          onChanged: controller.setPassword,
                         );
                       },
                     ),
@@ -168,52 +108,30 @@ class LoginPage extends StatelessWidget {
                     ),
                     const OrDivider(),
                     const SizedBox(height: 20),
-                    ElevatedButton.icon(
-                      onPressed: controller.isLoading
-                          ? null
-                          : () {
-                              controller.loginWithGoogle();
-                            },
-                      icon: const Image(
-                        image: AssetImage("assets/images/google_logo.png"),
-                        height: 30.0,
-                      ),
-                      label: Text(
-                        'Login com Google',
-                        style: TextStyle(
-                          color: Colors.grey.shade800,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SocialButton(
+                          buttonType: SocialLoginButtonType.google,
+                          controller: controller,
                         ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
+                        const SizedBox(width: 20),
+                        SocialButton(
+                          buttonType: SocialLoginButtonType.facebook,
+                          controller: controller,
                         ),
-                      ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text('Esqueceu a senha?'),
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton.icon(
-                      onPressed: controller.isLoading
-                          ? null
-                          : () {
-                              controller.loginWithFacebook();
-                            },
-                      icon: const Icon(
-                        Icons.facebook,
-                        size: 30,
-                      ),
-                      label: const Text(
-                        'Login com Facebook',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue[800],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                      ),
+                      onPressed: () => Get.toNamed('/register'),
+                      icon: const Icon(Icons.person_add_alt_outlined),
+                      label: const Text('Registre-se'),
                     ),
                   ],
                 ),
