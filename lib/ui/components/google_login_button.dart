@@ -15,7 +15,7 @@ class GoogleLoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: () {
-        AuthController().signInWithGoogle(type);
+        AuthController().signInWithGoogle();
       },
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.black,

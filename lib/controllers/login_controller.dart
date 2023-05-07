@@ -41,6 +41,13 @@ class LoginController extends GetxController {
   void loginWithGoogle() async {
     setLoading(true);
     setError(false);
+    authContoller.signInWithGoogle();
+    setLoading(false);
+  }
+
+  void registerWithGoogle() async {
+    setLoading(true);
+    setError(false);
     if (accountType == 'tipo') {
       Get.snackbar(
         'Tipo de conta',
@@ -52,7 +59,7 @@ class LoginController extends GetxController {
       );
     } else {
       // Adicione aqui a lógica de login com Google para prestadores
-      authContoller.signInWithGoogle(accountType);
+      authContoller.registerWithGoogle(accountType);
     }
     setLoading(false);
   }

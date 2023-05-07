@@ -39,7 +39,41 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<UserModel?> signInWithGoogle(String? type) async {
+  Future<void> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    if (googleUser == null) {
+      return;
+    }
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    // Once signed in, return the UserCredential
+    final userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+    /* final user = UserModel(
+      id: userCredential.user!.uid,
+      name: userCredential.user!.displayName ?? '',
+      email: userCredential.user!.email ?? '',
+      photoUrl: userCredential.user!.photoURL,
+      deviceId: token,
+    );
+    await box.write('user', user.toJson());*/
+    await usersCollection
+        .doc(userCredential.user!.uid)
+        .update({'deviceId': token}).then((value) {
+      HelperNotification().senPushNotification(
+          token, userCredential.user!.displayName, 'Fez login com sucesso!');
+    });
+    // return user;
+  }
+
+  Future<UserModel?> registerWithGoogle(String? type) async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     if (googleUser == null) {

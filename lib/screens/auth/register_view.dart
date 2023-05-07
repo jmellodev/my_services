@@ -207,9 +207,11 @@ class _RegisterViewState extends State<RegisterView> {
                     SocialButton(
                       buttonType: SocialLoginButtonType.google,
                       controller: controller,
+                      onTap: () => controller.registerWithGoogle(),
                     ),
                     const SizedBox(width: 20),
                     SocialButton(
+                      onTap: () => controller.loginWithFacebook(),
                       buttonType: SocialLoginButtonType.facebook,
                       controller: controller,
                     ),

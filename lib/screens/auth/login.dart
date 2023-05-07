@@ -114,11 +114,13 @@ class LoginPage extends StatelessWidget {
                         SocialButton(
                           buttonType: SocialLoginButtonType.google,
                           controller: controller,
+                          onTap: () => controller.loginWithGoogle(),
                         ),
                         const SizedBox(width: 20),
                         SocialButton(
                           buttonType: SocialLoginButtonType.facebook,
                           controller: controller,
+                          onTap: () => controller.loginWithFacebook(),
                         ),
                       ],
                     ),

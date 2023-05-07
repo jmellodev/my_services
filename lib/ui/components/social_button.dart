@@ -10,7 +10,7 @@ class SocialButton extends StatelessWidget {
   const SocialButton({
     super.key,
     required this.controller,
-    this.onTap,
+    required this.onTap,
     this.icon,
     required this.buttonType,
     this.backgroundColor = const Color.fromARGB(255, 255, 255, 255),
@@ -25,11 +25,9 @@ class SocialButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget? icon;
-    VoidCallback? onTap;
     Color? backgroundColor;
     switch (buttonType) {
       case SocialLoginButtonType.facebook:
-        onTap = () => controller.loginWithFacebook();
         icon = const Icon(
           Icons.facebook,
           size: 30,
@@ -37,7 +35,6 @@ class SocialButton extends StatelessWidget {
         backgroundColor = const Color(0xFF334D92);
         break;
       case SocialLoginButtonType.google:
-        onTap = () => controller.loginWithGoogle();
         icon = const Image(
           image: AssetImage("assets/images/google_logo.png"),
           height: 25.0,
