@@ -33,3 +33,20 @@ class ServiceModel {
     };
   }
 }
+
+class DaysModel {
+  Map<String, Map<int, bool>> data;
+  DaysModel(this.data);
+
+  factory DaysModel.fromJson(Map<String, dynamic> json) {
+    Map<String, Map<int, bool>> parseData = {};
+    json.forEach((key, value) {
+      Map<int, bool> innerMap = {};
+      value.forEach((innerKey, innerValue) {
+        innerMap[int.parse(innerKey)] = innerValue;
+      });
+      parseData[key] = innerMap;
+    });
+    return DaysModel(parseData);
+  }
+}

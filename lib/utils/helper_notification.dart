@@ -1,13 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 
+import 'package:my_services/constants/firebase_constants.dart';
+
 class HelperNotification {
   // HelperNotification._();
   final http = GetConnect();
+  late final String apiKey;
 
   static Future<void> requestPermission() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -25,29 +29,35 @@ class HelperNotification {
 
   void senPushNotification(String? token, String? title, String body) async {
     try {
-      await http.post(
-        'https://fcm.googleapis.com/fcm/send',
-        {
-          'priority': 'high',
-          'data': {
-            'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-            'status': 'done',
-            'title': title,
-            'body': body,
+      await apiCollection.get().then((QuerySnapshot value) {
+        for (var doc in value.docs) {
+          apiKey = doc['key'];
+        }
+      });
+      if (apiKey.isNotEmpty) {
+        await http.post(
+          'https://fcm.googleapis.com/fcm/send',
+          {
+            'priority': 'high',
+            'data': {
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'status': 'done',
+              'title': title,
+              'body': body,
+            },
+            'notification': {
+              'title': title,
+              'body': body,
+              'android_channel_id': "my_services",
+            },
+            'to': token
           },
-          'notification': {
-            'title': title,
-            'body': body,
-            'android_channel_id': "my_services",
+          contentType: 'application/json',
+          headers: {
+            'Authorization': apiKey,
           },
-          'to': token
-        },
-        contentType: 'application/json',
-        headers: {
-          'Authorization':
-              'key=AAAAuO7OiQw:APA91bEmnnGOjk0-lQSm5TkeNhziYgLLpb3oo4-w6OEgRs4E3AD35wgxNSwwdEc1u3_XLXJjgUd_PPtWuWLf074CAkkrUkJpomaoc1Yv__mprKiyvFKZp9vj2Pg0-fxktuYI26O3G3Dv',
-        },
-      );
+        );
+      }
     } catch (e) {
       if (kDebugMode) debugPrint('Error push notification $e');
     }

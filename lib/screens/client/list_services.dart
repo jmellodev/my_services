@@ -37,6 +37,7 @@ class ServicesView extends StatelessWidget {
                     final service = services[index];
 
                     return ListTile(
+                      onTap: () => _controller.cereca(service.id),
                       title: Text(service.name),
                       subtitle: Text(service.description),
                       trailing: Text(

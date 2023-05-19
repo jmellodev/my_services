@@ -12,6 +12,7 @@ final Future<FirebaseApp> firebaseInitialization = Firebase.initializeApp(
   options: DefaultFirebaseOptions.currentPlatform,
 );
 
+final apiCollection = firestore.collection('apiKey');
 final usersCollection = firestore.collection('users');
 final cartsCollection = firestore.collection('carts');
 final servicesCollection = firestore.collection('services');

@@ -16,7 +16,7 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   final _formKey = GlobalKey<FormState>();
-  String _accountType = 'cliente';
+  final String _accountType = 'cliente';
   bool _passwordObscure = true;
   final _nameController = TextEditingController();
   final _passwordController = TextEditingController();
