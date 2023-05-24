@@ -75,11 +75,13 @@ class HomeView extends StatelessWidget {
             itemBuilder: (context, index) {
               final user = users[index];
 
-              return UserListItem(
-                user: user,
-                onSelect: () => _controller.toggleSelectUser(user),
-                isSelected: _controller.selectedUsers.contains(user),
-              );
+              return Obx(() {
+                return UserListItem(
+                  user: user,
+                  onSelect: () => _controller.toggleSelectUser(user),
+                  isSelected: _controller.selectedUsers.contains(user),
+                );
+              });
             },
           );
         },

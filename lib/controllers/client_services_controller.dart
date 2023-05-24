@@ -18,7 +18,7 @@ class ClientServicesController extends GetxController {
               // print(data);
               return ServiceModel.fromJson(data as Map<String, dynamic>);
             }).toList());
-    getAllFeedPosts(clientId);
+    // getAllFeedPosts(clientId);
     return services;
   }
 
@@ -28,13 +28,13 @@ class ClientServicesController extends GetxController {
     var query =
         await servicesCollection.where('clientId', isEqualTo: clientId).get();
     for (var userdoc in query.docs) {
-      debugPrint("Serviços do usuário: ${userdoc.id}");
+      debugPrint("Serviços: ${userdoc['name']} : ${userdoc.id}");
       QuerySnapshot feed =
           await servicesCollection.doc(userdoc.id).collection("days").get();
       for (var postDoc in feed.docs) {
-        final xereca = postDoc.data() as Map<String, dynamic>;
-        debugPrint(xereca.toString());
-        print(DaysModel.fromJson(xereca).toString());
+        final data = postDoc.data() as Map<String, dynamic>;
+        var days = DaysModel.fromJson(data);
+        debugPrint("Dias ${days.data}");
       }
     }
     return allPosts;
@@ -50,16 +50,14 @@ class ClientServicesController extends GetxController {
     }, onError: (e) => debugPrint("Erro: $e"));
   }
 
-  cereca(String docId) async {
-    var result = await FirebaseFirestore.instance
-        .collection('services')
-        .doc(docId)
-        .collection('days')
-        .get();
-    debugPrint(docId);
-    debugPrint(
-        "#######################################################################");
-    debugPrint(result.docs.toString());
+  getDays(String docId) async {
+    print(docId);
+    await servicesCollection.where('id', isEqualTo: docId).get().then((value) {
+      for (var element in value.docs) {
+        var xota = element.data();
+        print(xota);
+      }
+    });
   }
 
   @override

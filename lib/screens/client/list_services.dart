@@ -37,7 +37,9 @@ class ServicesView extends StatelessWidget {
                     final service = services[index];
 
                     return ListTile(
-                      onTap: () => _controller.cereca(service.id),
+                      onTap: () =>
+                          // _controller.getAllFeedPosts(service.clientId),
+                          _controller.getDays(service.id),
                       title: Text(service.name),
                       subtitle: Text(service.description),
                       trailing: Text(

@@ -20,7 +20,10 @@ class UserListItem extends StatelessWidget {
       leading: CircleAvatar(
         child: Text(user.name![0].isEmpty ? 'N' : user.name![0]),
       ),
-      title: Text(user.name!),
+      title: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 500),
+        child: Text(user.name!),
+      ),
       subtitle: Text(user.email!),
       trailing: Checkbox(
         value: isSelected,

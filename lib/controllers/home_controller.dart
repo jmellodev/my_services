@@ -40,7 +40,7 @@ class HomeController extends GetxController {
   Stream<List<UserModel>> getUsersStream() {
     return usersCollection
         .where('isActive', isEqualTo: true)
-        .where('type', isEqualTo: 'prestador')
+        // .where('type', isEqualTo: 'prestador')
         .snapshots()
         .map((QuerySnapshot query) => query.docs.map((doc) {
               final data = doc.data();
